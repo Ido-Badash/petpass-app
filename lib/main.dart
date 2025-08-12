@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_glow/flutter_glow.dart';
+import 'package:petpass/core/app_theme.dart';
+import 'package:petpass/views/home_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    GlowTheme(
+      lightTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
+      darkTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,22 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Petpass',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo[700]!),
-      ),
-      home: const MyHomePage(title: 'Petpass Home Page'),
+      debugShowCheckedModeBanner: false,
+      title: 'PetPass',
+      theme: AppTheme.themeData,
+      home: const HomeView(),
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
