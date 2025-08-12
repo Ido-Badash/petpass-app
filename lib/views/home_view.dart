@@ -5,6 +5,7 @@ The home screen of the app
 
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
+import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeView extends StatefulWidget {
@@ -28,7 +29,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Appbar
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: GlowIcon(Icons.pets, color: Colors.lightBlue[200]),
@@ -44,71 +44,83 @@ class _HomeViewState extends State<HomeView> {
           ),
         ],
       ),
-
-      // Body
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
         children: [
-          const SizedBox(height: 8), // Space
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const GlowText(
-                  "The Future Of",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                GlowText(
-                  "Pet Access",
-                  style: TextStyle(
-                    color: Colors.lightBlue[200],
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8), // Space
-                const Text(
-                  "AI-powered doorway exclusively for your pets",
-                  style: TextStyle(color: Colors.white),
-                ),
-                const SizedBox(height: 24), // Space
-                SizedBox(
-                  width: 160,
-                  height: 38,
-                  child: GlowButton(
-                    color: const Color.fromARGB(255, 0, 21, 177),
-                    glowColor: const Color.fromARGB(255, 0, 21, 177),
-                    borderRadius: BorderRadius.circular(
-                      64,
-                    ), // Makes border oval
-                    onPressed: () {},
-                    child: const GlowText(
-                      "GET STARTED",
-                      style: TextStyle(color: Colors.white),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24), // Space
-                Column(
+          ScanningEffect(
+            enableBorder: false,
+            scanningColor: const Color.fromARGB(50, 129, 212, 250),
+            delay: const Duration(seconds: 0),
+            duration: const Duration(seconds: 5),
+            scanningLinePadding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 9,
+            ),
+            child: const SizedBox.expand(),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 8), // Space
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildImagesPageView(),
-                    SizedBox(height: 24), // Space
-                    _buildImagesPageIndicator(),
+                    const GlowText(
+                      "The Future Of",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    GlowText(
+                      "Pet Access",
+                      style: TextStyle(
+                        color: Colors.lightBlue[200],
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8), // Space
+                    const Text(
+                      "AI-powered doorway exclusively for your pets",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 24), // Space
+                    SizedBox(
+                      width: 160,
+                      height: 38,
+                      child: GlowButton(
+                        color: const Color.fromARGB(255, 0, 21, 177),
+                        glowColor: const Color.fromARGB(255, 0, 21, 177),
+                        borderRadius: BorderRadius.circular(
+                          64,
+                        ), // Makes border oval
+                        onPressed: () {},
+                        child: const GlowText(
+                          "GET STARTED",
+                          style: TextStyle(color: Colors.white),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24), // Space
+                    Column(
+                      children: [
+                        _buildImagesPageView(),
+                        SizedBox(height: 24), // Space
+                        _buildImagesPageIndicator(),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
-
       backgroundColor: Colors.black,
     );
   }
