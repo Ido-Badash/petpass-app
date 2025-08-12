@@ -5,9 +5,25 @@ The home screen of the app
 
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  // spi = smooth page indicator
+  final PageController _spiController = PageController();
+  final int imagesCount = 3;
+
+  @override
+  void dispose() {
+    _spiController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +96,12 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24), // Space
-                Builder(
-                  builder: (context) {
-                    final width = MediaQuery.of(context).size.width;
-                    return Image.asset(
-                      "assets/images/home_image_1.png",
-                      width: width * 0.75, // 75% of device width
-                    );
-                  },
+                Column(
+                  children: [
+                    _buildImagesPageView(),
+                    SizedBox(height: 12), // Space
+                    _buildImagesPageIndicator(),
+                  ],
                 ),
               ],
             ),
@@ -96,6 +110,49 @@ class HomeView extends StatelessWidget {
       ),
 
       backgroundColor: Colors.black,
+    );
+  }
+
+  Widget _buildImagesPageView() {
+    return SizedBox(
+      height: 200,
+      child: PageView.builder(
+        physics: const PageScrollPhysics(parent: BouncingScrollPhysics()),
+        controller: _spiController,
+        itemBuilder: _imagesItemBuilder,
+        itemCount: imagesCount,
+      ),
+    );
+  }
+
+  Widget? _imagesItemBuilder(BuildContext context, int index) {
+    return Builder(
+      builder: (context) {
+        final width = MediaQuery.of(context).size.width;
+        // Use 1-based indexing for asset filenames
+        final imgIndex = index + 1;
+        return Image.asset(
+          "assets/images/pets_scan_$imgIndex.png",
+          width: width * 0.75, // 75% of device width
+        );
+      },
+    );
+  }
+
+  Widget _buildImagesPageIndicator() {
+    return Container(
+      alignment: Alignment.center,
+      child: SmoothPageIndicator(
+        controller: _spiController,
+        count: imagesCount,
+        onDotClicked: (int idx) {
+          _spiController.animateToPage(
+            idx,
+            duration: Durations.long4,
+            curve: Curves.easeInOutCubicEmphasized,
+          );
+        },
+      ),
     );
   }
 }
