@@ -99,7 +99,7 @@ class _HomeViewState extends State<HomeView> {
                 Column(
                   children: [
                     _buildImagesPageView(),
-                    SizedBox(height: 12), // Space
+                    SizedBox(height: 24), // Space
                     _buildImagesPageIndicator(),
                   ],
                 ),
@@ -115,7 +115,7 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _buildImagesPageView() {
     return SizedBox(
-      height: 200,
+      height: MediaQuery.of(context).size.height * 0.4,
       child: PageView.builder(
         physics: const PageScrollPhysics(parent: BouncingScrollPhysics()),
         controller: _spiController,
@@ -126,16 +126,9 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget? _imagesItemBuilder(BuildContext context, int index) {
-    return Builder(
-      builder: (context) {
-        final width = MediaQuery.of(context).size.width;
-        // Use 1-based indexing for asset filenames
-        final imgIndex = index + 1;
-        return Image.asset(
-          "assets/images/pets_scan_$imgIndex.png",
-          width: width * 0.75, // 75% of device width
-        );
-      },
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(75),
+      child: Image.asset("assets/images/home_image_${index + 1}.png"),
     );
   }
 
@@ -145,6 +138,7 @@ class _HomeViewState extends State<HomeView> {
       child: SmoothPageIndicator(
         controller: _spiController,
         count: imagesCount,
+        effect: WormEffect(dotWidth: 12, dotHeight: 12),
         onDotClicked: (int idx) {
           _spiController.animateToPage(
             idx,
