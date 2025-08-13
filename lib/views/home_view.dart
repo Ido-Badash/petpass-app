@@ -12,6 +12,7 @@ import 'package:petpass/utils/widgets/feature_step_row.dart';
 import 'package:petpass/utils/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:floating_animation/floating_animation.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -155,7 +156,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildScanningEffect() {
     return ScanningEffect(
       enableBorder: false,
-      scanningColor: CustomColors.lightBlue,
+      scanningColor: Colors.lightBlue[200]!,
       delay: const Duration(seconds: 0),
       duration: const Duration(seconds: 5),
       scanningLinePadding: const EdgeInsets.symmetric(
@@ -184,17 +185,20 @@ class _HomeViewState extends State<HomeView> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child: Container(
-            // TODO: add floating and rotating icons like in space going from left to right
-            height: 150,
-            color: Colors.red,
-            child: Center(
-              child: Text(
-                "Add animation here",
-                style: TextStyle(color: Colors.black, fontSize: 28),
-              ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            width: double.infinity,
+            height: 80,
+            child: FloatingAnimation(
+              direction: FloatingDirection.up,
+              icon: Icons.auto_awesome_outlined,
+              selectedShape: 'icon',
+              shapeColors: {'icon': Colors.lightBlue[200]!},
+              spawnRate: 0.5,
+              maxShapes: 20,
+              enableRotation: true,
+              enablePulse: true,
             ),
           ),
         ),
