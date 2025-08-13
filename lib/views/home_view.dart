@@ -7,8 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/utils/custom_colors.dart';
-import 'package:petpass/utils/feature_step_row.dart';
-import 'package:petpass/utils/glow_feature_card.dart';
+import 'package:petpass/utils/widgets/bouncing_widget.dart';
+import 'package:petpass/utils/widgets/feature_step_row.dart';
+import 'package:petpass/utils/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -258,16 +259,18 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget? _imagesItemBuilder(BuildContext context, int index) {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        width:
-            MediaQuery.of(context).size.width * 0.8, // 80% of the screen width
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
-        clipBehavior: Clip.antiAlias,
-        child: Image.asset(
-          "assets/images/home_image_${index + 1}.png",
-          fit: BoxFit.cover,
+    return BouncingWidget(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          width:
+              MediaQuery.of(context).size.width * 0.8, // 80% of the screen width
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
+          clipBehavior: Clip.antiAlias,
+          child: Image.asset(
+            "assets/images/home_image_${index + 1}.png",
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
