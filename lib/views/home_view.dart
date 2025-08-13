@@ -3,8 +3,12 @@ HomeView
 The home screen of the app
 */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
+import 'package:petpass/utils/custom_colors.dart';
+import 'package:petpass/utils/feature_step_row.dart';
+import 'package:petpass/utils/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -46,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {}, // TODO: make menu button do something
           icon: GlowIcon(Icons.menu, color: Colors.lightBlue[200]),
         ),
       ],
@@ -54,13 +58,104 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _buildBody() {
-    return Stack(children: [_buildScanningEffect(), _buildContentColumn()]);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [_buildScanningEffect(), _buildContentColumn()],
+            ),
+          ),
+          // TODO: add floating and rotating icons like in space going from left to right
+          _buildSmartFeaturesSection(),
+          SizedBox(height: 64), // Space
+          _buildHowItWorksSection(),
+          SizedBox(height: 64), // Space
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHowItWorksSection() {
+    return Column(
+      children: [
+        const Text(
+          "How It Works",
+          style: TextStyle(color: Colors.white, fontSize: 28),
+        ),
+        const SizedBox(height: 30), // Space
+        FeatureStepRow(
+          stepText: "1",
+          featureCard: GlowFeatureCard.classic(
+            context,
+            title: "Register Your Pets",
+            description:
+                "Scan your pets using the PetPass app to register their unique biometric data.",
+          ),
+        ),
+        const SizedBox(height: 24), // Space
+        FeatureStepRow(
+          stepText: "2",
+          featureCard: GlowFeatureCard.classic(
+            context,
+            title: "Install PetPass Door",
+            description:
+                "Our easy installation process takes less than 30 minutes to set up.",
+          ),
+        ),
+        const SizedBox(height: 24), // Space
+        FeatureStepRow(
+          stepText: "3",
+          lineColor: Colors.transparent,
+          featureCard: GlowFeatureCard.classic(
+            context,
+            title: "Enjoy Freedom",
+            description:
+                "Your pets can come and go safely while you monitor activity through the app.",
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmartFeaturesSection() {
+    return Column(
+      children: [
+        const Text(
+          "Smart Features",
+          style: TextStyle(color: Colors.white, fontSize: 28),
+        ),
+        const SizedBox(height: 30), // Space
+        GlowFeatureCard.classic(
+          context,
+          title: "AI Recognition",
+          description:
+              "Advanced technology that recognizes only your registered pets.",
+          icon: Icons.linked_camera_outlined,
+        ),
+        const SizedBox(height: 24), // Space
+        GlowFeatureCard.classic(
+          context,
+          title: "Enhanced Security",
+          description: "Keeps unwanted animals away from your home.",
+          icon: CupertinoIcons.shield_lefthalf_fill,
+        ),
+        const SizedBox(height: 24), // Space
+        GlowFeatureCard.classic(
+          context,
+          title: "Mobile Control",
+          description: "Monitor and control access from your smartphone.",
+          icon: Icons.phone_android,
+        ),
+      ],
+    );
   }
 
   Widget _buildScanningEffect() {
     return ScanningEffect(
       enableBorder: false,
-      scanningColor: const Color.fromARGB(50, 129, 212, 250),
+      scanningColor: CustomColors.lightBlue,
       delay: const Duration(seconds: 0),
       duration: const Duration(seconds: 5),
       scanningLinePadding: const EdgeInsets.symmetric(
@@ -76,7 +171,7 @@ class _HomeViewState extends State<HomeView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 8), // Space
+        const SizedBox(height: 16), // Space
         Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -126,10 +221,10 @@ class _HomeViewState extends State<HomeView> {
       width: 160,
       height: 38,
       child: GlowButton(
-        color: const Color.fromARGB(255, 0, 21, 177),
-        glowColor: const Color.fromARGB(255, 0, 21, 177),
+        color: CustomColors.deepBlue,
+        glowColor: CustomColors.deepBlue,
         borderRadius: BorderRadius.circular(64), // Makes border oval
-        onPressed: () {},
+        onPressed: () {}, // TODO: make "GET STARTED" button do something
         child: const GlowText(
           "GET STARTED",
           style: TextStyle(color: Colors.white),
@@ -163,9 +258,18 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget? _imagesItemBuilder(BuildContext context, int index) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(75),
-      child: Image.asset("assets/images/home_image_${index + 1}.png"),
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        width:
+            MediaQuery.of(context).size.width * 0.8, // 80% of the screen width
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
+        clipBehavior: Clip.antiAlias,
+        child: Image.asset(
+          "assets/images/home_image_${index + 1}.png",
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 
@@ -175,7 +279,11 @@ class _HomeViewState extends State<HomeView> {
       child: SmoothPageIndicator(
         controller: _spiController,
         count: imagesCount,
-        effect: WormEffect(dotWidth: 12, dotHeight: 12),
+        effect: const WormEffect(
+          dotWidth: 12,
+          dotHeight: 12,
+          activeDotColor: CustomColors.deepBlue,
+        ),
         onDotClicked: (int idx) {
           _spiController.animateToPage(
             idx,
