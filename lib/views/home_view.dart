@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/utils/custom_colors.dart';
-import 'package:petpass/utils/widgets/bouncing_widget.dart';
+import 'package:petpass/utils/widgets/floating_widget.dart';
 import 'package:petpass/utils/widgets/feature_step_row.dart';
 import 'package:petpass/utils/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
@@ -68,7 +68,6 @@ class _HomeViewState extends State<HomeView> {
               children: [_buildScanningEffect(), _buildContentColumn()],
             ),
           ),
-          // TODO: add floating and rotating icons like in space going from left to right
           _buildSmartFeaturesSection(),
           SizedBox(height: 64), // Space
           _buildHowItWorksSection(),
@@ -185,6 +184,20 @@ class _HomeViewState extends State<HomeView> {
             ],
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: Container(
+            // TODO: add floating and rotating icons like in space going from left to right
+            height: 150,
+            color: Colors.red,
+            child: Center(
+              child: Text(
+                "Add animation here",
+                style: TextStyle(color: Colors.black, fontSize: 28),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -259,17 +272,21 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget? _imagesItemBuilder(BuildContext context, int index) {
-    return BouncingWidget(
+    return FloatingWidget(
       child: Align(
         alignment: Alignment.center,
-        child: Container(
-          width:
-              MediaQuery.of(context).size.width * 0.8, // 80% of the screen width
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
-          clipBehavior: Clip.antiAlias,
-          child: Image.asset(
-            "assets/images/home_image_${index + 1}.png",
-            fit: BoxFit.cover,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 32.0), // Add extra top padding
+          child: Container(
+            width:
+                MediaQuery.of(context).size.width *
+                0.8, // 80% of the screen width
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(24)),
+            clipBehavior: Clip.antiAlias,
+            child: Image.asset(
+              "assets/images/home_image_${index + 1}.png",
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),

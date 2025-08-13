@@ -6,16 +6,23 @@ a bouncing effect
 
 import 'package:flutter/material.dart';
 
-class BouncingWidget extends StatefulWidget {
+class FloatingWidget extends StatefulWidget {
   final Widget? child;
+  final Duration? duration;
+  final double offset;
 
-  const BouncingWidget({super.key, this.child});
+  const FloatingWidget({
+    super.key,
+    this.child,
+    this.duration,
+    this.offset = -0.05,
+  });
 
   @override
-  State<BouncingWidget> createState() => _BouncingWidgetState();
+  State<FloatingWidget> createState() => _FloatingWidgetState();
 }
 
-class _BouncingWidgetState extends State<BouncingWidget>
+class _FloatingWidgetState extends State<FloatingWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Offset> _floatingAnimation;
@@ -24,12 +31,12 @@ class _BouncingWidgetState extends State<BouncingWidget>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: widget.duration ?? const Duration(seconds: 5),
       vsync: this,
     )..repeat(reverse: true);
     _floatingAnimation = Tween<Offset>(
       begin: Offset(0, 0),
-      end: Offset(0, -0.04), // negative for up, positive for down
+      end: Offset(0, widget.offset), // negative for up, positive for down
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
