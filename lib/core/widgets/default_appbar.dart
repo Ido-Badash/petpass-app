@@ -7,8 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const DefaultAppBar({super.key, this.actions = const []});
+  const DefaultAppBar({
+    super.key,
+    this.actions = const [],
+    this.actionsPadding,
+  });
   final List<Widget> actions;
+  final EdgeInsetsGeometry? actionsPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +28,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: theme.appBarTheme.titleTextStyle ?? theme.textTheme.titleLarge,
       ),
       actions: actions,
+      actionsPadding: actionsPadding,
     );
   }
 

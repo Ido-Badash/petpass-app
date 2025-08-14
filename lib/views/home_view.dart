@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:petpass/core/widgets/default_appbar.dart';
 
@@ -7,20 +8,22 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(),
-      body: Center(
+      appBar: DefaultAppBar(
+        actionsPadding: const EdgeInsets.only(right: 8.0),
+        actions: [
+          if (kDebugMode)
+            IconButton(
+              onPressed: () => Navigator.pushNamed(context, "/welcome"),
+              tooltip: "Welcome Page",
+              icon: const Icon(Icons.waving_hand_outlined),
+            ),
+        ],
+      ),
+
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Home", style: TextStyle(fontSize: 40)),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, "/welcome"),
-              child: const Text(
-                "debug: back to welcome page",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ],
+          children: [Text("Home", style: TextStyle(fontSize: 40))],
         ),
       ),
     );
