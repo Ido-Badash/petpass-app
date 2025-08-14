@@ -57,7 +57,7 @@ class GlowFeatureCard extends StatelessWidget {
       decoration: BoxDecoration(
         color:
             iconBackgroundColor ??
-            Theme.of(context).iconTheme.color?.withOpacity(0.1),
+            Theme.of(context).iconTheme.color?.withAlpha(25),
         shape: BoxShape.circle,
       ),
       child: Center(
