@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/firebase_options.dart';
+import 'package:petpass/views/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
@@ -13,6 +15,11 @@ Future<void> main() async {
 
   // firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  /*
+  COLLECTIONS
+  - flags (for feature flags)
+  */
 
   // run app
   runApp(
@@ -31,11 +38,52 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PetPass',
+      title: "PetPass",
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system, // auto-switch based on device settings
-      home: const WelcomeView(),
+      routes: {
+        "/welcome": (context) => const WelcomeView(),
+        "/home": (context) => const HomeView(),
+      },
+      home: FutureBuilder<bool>(
+        future: pressedGetStarted(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 8), // Space
+                    Text(
+                      "Fetching firebase data...",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+          return snapshot.data! ? const HomeView() : const WelcomeView();
+        },
+      ),
     );
+  }
+
+  /// Checks Firestore for pressedGetStarted flag in flags collection.
+  Future<bool> pressedGetStarted() async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection("flags")
+        .orderBy("timestamp", descending: true)
+        .limit(1)
+        .get();
+    if (snapshot.docs.isEmpty) {
+      return false;
+    }
+    final doc = snapshot.docs.first;
+    final pressed = doc["pressedGetStarted"];
+    return pressed;
   }
 }

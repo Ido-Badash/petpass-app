@@ -3,6 +3,7 @@ WelcomeView
 The home screen of the app
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
@@ -255,7 +256,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         color: CustomColors.deepBlue,
         glowColor: CustomColors.deepBlue,
         borderRadius: BorderRadius.circular(64), // Makes border oval
-        onPressed: () => _onGetStartedPressed,
+        onPressed: _onGetStartedPressed,
         child: const GlowText(
           "GET STARTED",
           style: TextStyle(color: Colors.white),
@@ -267,8 +268,15 @@ class _WelcomeViewState extends State<WelcomeView> {
   }
 
   void _onGetStartedPressed() {
-    // 1. TODO: send massage to the DB so this view "WelcomeView" wont show up again when opening the app
-    // 2. TODO: move to the HomeView
+    // After the get started button was pressed, save it in the DB
+    // so the next time the user enters the app the WelcomView wont be
+    FirebaseFirestore.instance.collection("flags").add({
+      "pressedGetStarted": true,
+      "timestamp": FieldValue.serverTimestamp(),
+    });
+
+    // Navigate to the HomeView
+    Navigator.pushNamed(context, "/home");
   }
 
   Widget _buildImagesSection() {
