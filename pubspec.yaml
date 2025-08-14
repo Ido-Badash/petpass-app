@@ -22,6 +22,7 @@ dependencies:
 
   # text
   google_fonts: ^6.3.0
+  firebase_core: ^4.0.0
 
 # Dev dependencies
 dev_dependencies:

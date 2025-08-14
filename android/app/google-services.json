@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677481332114",
+    "project_id": "petpass-c7944",
+    "storage_bucket": "petpass-c7944.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677481332114:android:3c1bf62b72e0e6ebb1954b",
+        "android_client_info": {
+          "package_name": "com.example.petpass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRpxg3c8t9OEIXHxMTH_Wgz2tXPdE_ufk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

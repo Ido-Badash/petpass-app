@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
+import 'package:petpass/firebase_options.dart';
 import 'package:petpass/views/welcome_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'dart:async';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  // firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // run app
   runApp(
     GlowTheme(
       lightTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
