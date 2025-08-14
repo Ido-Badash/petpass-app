@@ -7,16 +7,15 @@ a bouncing effect
 import 'package:flutter/material.dart';
 
 class FloatingWidget extends StatefulWidget {
-  final Widget? child;
-  final Duration? duration;
-  final double offset;
-
   const FloatingWidget({
     super.key,
     this.child,
     this.duration,
     this.offset = -0.05,
   });
+  final Widget? child;
+  final Duration? duration;
+  final double offset;
 
   @override
   State<FloatingWidget> createState() => _FloatingWidgetState();
@@ -35,7 +34,7 @@ class _FloatingWidgetState extends State<FloatingWidget>
       vsync: this,
     )..repeat(reverse: true);
     _floatingAnimation = Tween<Offset>(
-      begin: Offset(0, 0),
+      begin: const Offset(0, 0),
       end: Offset(0, widget.offset), // negative for up, positive for down
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
@@ -50,10 +49,7 @@ class _FloatingWidgetState extends State<FloatingWidget>
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _floatingAnimation,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: widget.child,
-      ),
+      child: Padding(padding: const EdgeInsets.all(8.0), child: widget.child),
     );
   }
 }

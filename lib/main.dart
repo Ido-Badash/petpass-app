@@ -1,17 +1,18 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show SystemChrome, SystemUiMode;
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/firebase_options.dart';
 import 'package:petpass/views/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'dart:async';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   // firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -26,7 +27,7 @@ Future<void> main() async {
     GlowTheme(
       lightTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
       darkTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WelcomeView welcomeView = const WelcomeView();
+    final HomeView homeView = const HomeView();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "PetPass",
@@ -43,8 +47,8 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system, // auto-switch based on device settings
       routes: {
-        "/welcome": (context) => const WelcomeView(),
-        "/home": (context) => const HomeView(),
+        "/welcome": (context) => welcomeView,
+        "/home": (context) => homeView,
       },
       home: FutureBuilder<bool>(
         future: pressedGetStarted(),
@@ -66,7 +70,7 @@ class MyApp extends StatelessWidget {
               ),
             );
           }
-          return snapshot.data! ? const HomeView() : const WelcomeView();
+          return snapshot.data! ? homeView : welcomeView;
         },
       ),
     );
@@ -84,6 +88,6 @@ class MyApp extends StatelessWidget {
     }
     final doc = snapshot.docs.first;
     final pressed = doc["pressedGetStarted"];
-    return pressed;
+    return pressed == true;
   }
 }

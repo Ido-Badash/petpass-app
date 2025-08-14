@@ -10,8 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
 
+  # icons
+  cupertino_icons: ^1.0.8
+  
   # widgets
   flutter_glow: ^0.3.2
   smooth_page_indicator: ^1.2.1
@@ -32,6 +34,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+
+  # rules
+  lint: ^2.8.0
 
 # Flutter
 flutter:

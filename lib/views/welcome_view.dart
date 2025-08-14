@@ -4,17 +4,17 @@ The home screen of the app
 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:floating_animation/floating_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/custom_colors.dart';
 import 'package:petpass/core/widgets/default_appbar.dart';
-import 'package:petpass/core/widgets/floating_widget.dart';
 import 'package:petpass/core/widgets/feature_step_row.dart';
+import 'package:petpass/core/widgets/floating_widget.dart';
 import 'package:petpass/core/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:floating_animation/floating_animation.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -50,7 +50,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         moreInfoOpacity = (1.0 - (pixels / fadeSpeed)).clamp(0.0, 1.0);
       });
     });
-    return Scaffold(appBar: DefaultAppBar(), body: _buildBody());
+    return Scaffold(appBar: const DefaultAppBar(), body: _buildBody());
   }
 
   Widget _buildBody() {
@@ -75,9 +75,9 @@ class _WelcomeViewState extends State<WelcomeView> {
             ),
           ), // Space
           _buildSmartFeaturesSection(),
-          SizedBox(height: 64), // Space
+          const SizedBox(height: 64), // Space
           _buildHowItWorksSection(),
-          SizedBox(height: 64), // Space
+          const SizedBox(height: 64), // Space
         ],
       ),
     );
