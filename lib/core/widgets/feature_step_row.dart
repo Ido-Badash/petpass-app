@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/custom_colors.dart';
+import 'package:petpass/core/custom_colors.dart';
 
 class FeatureStepRow extends StatelessWidget {
   final String stepText;
@@ -15,7 +15,7 @@ class FeatureStepRow extends StatelessWidget {
     super.key,
     required this.stepText,
     required this.featureCard,
-    this.circleColor = CustomColors.deepBlue,
+    this.circleColor,
     this.lineColor,
     this.showLine = true,
     this.circleSize = 30,
@@ -39,21 +39,27 @@ class FeatureStepRow extends StatelessWidget {
                 width: circleSize,
                 height: circleSize,
                 decoration: BoxDecoration(
-                  color: circleColor ?? theme.colorScheme.primary,
+                  color:
+                      circleColor ??
+                      (Theme.of(context).brightness == Brightness.dark
+                          ? theme.colorScheme.onSecondary
+                          : CustomColors.lightBlue),
                   shape: BoxShape.circle,
+                  border: Border.all(
+                    color: lineColor ?? theme.colorScheme.secondary,
+                    width: 0.5,
+                  ),
                 ),
                 alignment: Alignment.center,
-                child: Text(
-                  stepText,
-                  style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onPrimary) ?? const TextStyle(color: Colors.white, fontSize: 18),
-                ),
+                child: Text(stepText, style: const TextStyle(fontSize: 18)),
               ),
-              if (showLine)
-                Container(
-                  width: 1,
-                  height: lineHeight,
-                  color: lineColor ?? theme.colorScheme.secondary.withOpacity(0.8),
-                ),
+              Container(
+                width: 1,
+                height: lineHeight,
+                color: showLine
+                    ? lineColor ?? theme.colorScheme.secondary.withAlpha(204)
+                    : Colors.transparent,
+              ),
             ],
           ),
         ),

@@ -114,7 +114,7 @@ class GlowFeatureCard extends StatelessWidget {
         style: theme.textTheme.bodyMedium,
       ),
       icon: icon,
-      iconBackgroundColor: theme.iconTheme.color?.withOpacity(0.1),
+      iconBackgroundColor: theme.iconTheme.color?.withAlpha(25),
       backgroundColor: theme.scaffoldBackgroundColor,
       foregroundColor: theme.colorScheme.secondary,
     );

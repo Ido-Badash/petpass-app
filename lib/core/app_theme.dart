@@ -17,7 +17,7 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.black,
     iconTheme: IconThemeData(color: Colors.lightBlue[200]),
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color.fromARGB(255, 0, 21, 177),
+      backgroundColor: Colors.black,
       iconTheme: IconThemeData(color: Colors.lightBlue[200]),
       titleTextStyle: GoogleFonts.nunito(
         fontSize: 20,
@@ -38,7 +38,7 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.white,
     iconTheme: IconThemeData(color: Colors.lightBlue[200]),
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.lightBlue[200]),
       titleTextStyle: GoogleFonts.nunito(
         fontSize: 20,

@@ -7,10 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/custom_colors.dart';
-import 'package:petpass/utils/widgets/default_appbar.dart';
-import 'package:petpass/utils/widgets/floating_widget.dart';
-import 'package:petpass/utils/widgets/feature_step_row.dart';
-import 'package:petpass/utils/widgets/glow_feature_card.dart';
+import 'package:petpass/core/widgets/default_appbar.dart';
+import 'package:petpass/core/widgets/floating_widget.dart';
+import 'package:petpass/core/widgets/feature_step_row.dart';
+import 'package:petpass/core/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:floating_animation/floating_animation.dart';
@@ -39,7 +39,9 @@ class _WelcomeViewState extends State<WelcomeView> {
 
   @override
   Widget build(BuildContext context) {
-    initialMoreInfoColor = Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7) ?? Colors.white70;
+    initialMoreInfoColor =
+        Theme.of(context).textTheme.bodyMedium?.color?.withAlpha(178) ??
+        Colors.white70;
     _scrollController.addListener(() {
       setState(() {
         final double pixels = _scrollController.position.pixels;
@@ -47,11 +49,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         moreInfoOpacity = (1.0 - (pixels / fadeSpeed)).clamp(0.0, 1.0);
       });
     });
-    return Scaffold(
-      appBar: DefaultAppBar(),
-      body: _buildBody(),
-      backgroundColor: Colors.black,
-    );
+    return Scaffold(appBar: DefaultAppBar(), body: _buildBody());
   }
 
   Widget _buildBody() {
@@ -67,9 +65,15 @@ class _WelcomeViewState extends State<WelcomeView> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 30),
-            child: Container(width: double.infinity, height: 1, color: Colors.white38,),
+            child: Container(
+              width: double.infinity,
+              height: 1,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white38
+                  : Colors.black38,
+            ),
           ), // Space
-          _buildSmartFeaturesSection(), 
+          _buildSmartFeaturesSection(),
           SizedBox(height: 64), // Space
           _buildHowItWorksSection(),
           SizedBox(height: 64), // Space
@@ -81,10 +85,7 @@ class _WelcomeViewState extends State<WelcomeView> {
   Widget _buildHowItWorksSection() {
     return Column(
       children: [
-        Text(
-          "How It Works",
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
+        Text("How It Works", style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 30), // Space
         FeatureStepRow(
           stepText: "1",
@@ -108,7 +109,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         const SizedBox(height: 24), // Space
         FeatureStepRow(
           stepText: "3",
-          lineColor: Colors.transparent,
+          showLine: false,
           featureCard: GlowFeatureCard.classic(
             context,
             title: "Enjoy Freedom",
@@ -230,11 +231,7 @@ class _WelcomeViewState extends State<WelcomeView> {
       children: [
         const GlowText(
           "The Future Of",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
         ),
         GlowText(
           "Pet Access",
@@ -245,10 +242,7 @@ class _WelcomeViewState extends State<WelcomeView> {
           ),
         ),
         const SizedBox(height: 8), // Space
-        const Text(
-          "AI-powered doorway exclusively for your pets",
-          style: TextStyle(color: Colors.white),
-        ),
+        const Text("AI-powered doorway exclusively for your pets"),
       ],
     );
   }
@@ -301,6 +295,7 @@ class _WelcomeViewState extends State<WelcomeView> {
 
   Widget? _imagesItemBuilder(BuildContext context, int index) {
     return FloatingWidget(
+      duration: const Duration(seconds: 2, milliseconds: 500),
       child: Align(
         alignment: Alignment.center,
         child: Padding(
