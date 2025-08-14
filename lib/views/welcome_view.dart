@@ -200,9 +200,9 @@ class _WelcomeViewState extends State<WelcomeView> {
               ),
             ),
             Positioned(
-              bottom: 0,
-              left: 0,
               right: 0,
+              left: 0,
+              top: 40,
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 200),
                 opacity: moreInfoOpacity,
