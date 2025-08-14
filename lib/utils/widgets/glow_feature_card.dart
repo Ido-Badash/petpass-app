@@ -4,7 +4,6 @@ GlowFeatureCard widget
 
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
-import 'package:petpass/utils/custom_colors.dart';
 
 class GlowFeatureCard extends StatelessWidget {
   final Widget? title;
@@ -32,43 +31,62 @@ class GlowFeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GlowContainer(
       width: width,
       height: height,
-      color: backgroundColor,
-      glowColor: foregroundColor,
+      color: backgroundColor ?? theme.scaffoldBackgroundColor,
+      glowColor: foregroundColor ?? theme.colorScheme.secondary,
       borderRadius: BorderRadius.circular(radius ?? 16),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (icon != null) _buildIcon(),
+          if (icon != null) _buildIcon(context),
           if (icon != null) const SizedBox(width: 20),
-          Expanded(child: _buildTextSection()),
+          Expanded(child: _buildTextSection(context)),
         ],
       ),
     );
   }
 
-  Widget _buildIcon() {
+  Widget _buildIcon(BuildContext context) {
     return Container(
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-        color: iconBackgroundColor,
+        color:
+            iconBackgroundColor ??
+            Theme.of(context).iconTheme.color?.withOpacity(0.1),
         shape: BoxShape.circle,
       ),
-      child: Center(child: Icon(icon, color: foregroundColor, size: 25)),
+      child: Center(
+        child: Icon(
+          icon,
+          color: foregroundColor ?? Theme.of(context).iconTheme.color,
+          size: 25,
+        ),
+      ),
     );
   }
 
-  Widget _buildTextSection() {
+  Widget _buildTextSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (title != null) title!,
-        if (description != null) ...[const SizedBox(height: 4), description!],
+        if (title != null)
+          DefaultTextStyle.merge(
+            style: Theme.of(context).textTheme.titleMedium!,
+            child: title!,
+          ),
+        if (description != null) ...[
+          const SizedBox(height: 4),
+          DefaultTextStyle.merge(
+            style: Theme.of(context).textTheme.bodyMedium!,
+            child: description!,
+          ),
+        ],
       ],
     );
   }
@@ -81,27 +99,24 @@ class GlowFeatureCard extends StatelessWidget {
     double? width,
     double? height,
   }) {
+    final theme = Theme.of(context);
     return GlowFeatureCard(
-      width:
-          width ??
-          MediaQuery.of(context).size.width * 0.9, // 90% of screen width
+      width: width ?? MediaQuery.of(context).size.width * 0.9,
       height: height,
       title: Text(
         title ?? "title",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
+        style: theme.textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w600,
         ),
       ),
       description: Text(
         description ?? "description",
-        style: TextStyle(color: Colors.white),
+        style: theme.textTheme.bodyMedium,
       ),
       icon: icon,
-      iconBackgroundColor: CustomColors.darkBlueGrey,
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.lightBlue[200],
+      iconBackgroundColor: theme.iconTheme.color?.withOpacity(0.1),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      foregroundColor: theme.colorScheme.secondary,
     );
   }
 }

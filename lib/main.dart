@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
-import 'package:petpass/views/home_view.dart';
+import 'package:petpass/views/welcome_view.dart';
 
 void main() {
   runApp(
@@ -21,8 +21,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PetPass',
-      theme: AppTheme.themeData,
-      home: const HomeView(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system, // auto-switch based on device settings
+      home: const WelcomeView(),
     );
   }
 }

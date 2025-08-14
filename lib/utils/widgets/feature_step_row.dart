@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../custom_colors.dart';
+import '../../core/custom_colors.dart';
 
 class FeatureStepRow extends StatelessWidget {
   final String stepText;
@@ -25,6 +25,7 @@ class FeatureStepRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,20 +39,20 @@ class FeatureStepRow extends StatelessWidget {
                 width: circleSize,
                 height: circleSize,
                 decoration: BoxDecoration(
-                  color: circleColor,
+                  color: circleColor ?? theme.colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   stepText,
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                  style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onPrimary) ?? const TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
               if (showLine)
                 Container(
                   width: 1,
                   height: lineHeight,
-                  color: lineColor ?? Colors.lightBlue[200]?.withAlpha(200),
+                  color: lineColor ?? theme.colorScheme.secondary.withOpacity(0.8),
                 ),
             ],
           ),

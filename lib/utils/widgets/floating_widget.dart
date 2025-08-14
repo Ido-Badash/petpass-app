@@ -50,7 +50,10 @@ class _FloatingWidgetState extends State<FloatingWidget>
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _floatingAnimation,
-      child: Padding(padding: const EdgeInsets.all(8.0), child: widget.child),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: widget.child,
+      ),
     );
   }
 }
