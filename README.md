@@ -75,4 +75,4 @@ Follow the setup guide for each module:
 - **AI API:** FILL HERE / FILL HERE
 - **Door & Sensors:** FILL HERE / FILL HERE
 - **Mobile App:** Flutter, Dart
-- **Database:** FILL HERE
+- **Database:** Firebase

@@ -3,7 +3,6 @@ WelcomeView
 The home screen of the app
 */
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:floating_animation/floating_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -268,15 +267,8 @@ class _WelcomeViewState extends State<WelcomeView> {
   }
 
   void _onGetStartedPressed() {
-    // After the get started button was pressed, save it in the DB
-    // so the next time the user enters the app the WelcomView wont be
-    FirebaseFirestore.instance.collection("flags").add({
-      "pressedGetStarted": true,
-      "timestamp": FieldValue.serverTimestamp(),
-    });
-
     // Navigate to the HomeView
-    Navigator.pushNamed(context, "/home");
+    Navigator.pushNamed(context, "/guide");
   }
 
   Widget _buildImagesSection() {

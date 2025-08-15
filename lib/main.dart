@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemChrome, SystemUiMode;
+import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
+import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/firebase_options.dart';
+import 'package:petpass/views/guide_view.dart';
 import 'package:petpass/views/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
 
@@ -19,7 +21,8 @@ Future<void> main() async {
 
   /*
   COLLECTIONS
-  - flags (for feature flags)
+  - /flags (for UI features flags)
+  - /door (for door-related features)
   */
 
   // run app
@@ -38,6 +41,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final WelcomeView welcomeView = const WelcomeView();
+    final GuideView guideView = const GuideView();
     final HomeView homeView = const HomeView();
 
     return MaterialApp(
@@ -48,46 +52,51 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system, // auto-switch based on device settings
       routes: {
         "/welcome": (context) => welcomeView,
+        "/guide": (context) => guideView,
         "/home": (context) => homeView,
       },
       home: FutureBuilder<bool>(
-        future: pressedGetStarted(),
+        future: _finishedGuide(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 8), // Space
-                    Text(
-                      "Fetching firebase data...",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
-              ),
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(child: Text("Error: ${snapshot.error}")),
             );
           }
-          return snapshot.data! ? homeView : welcomeView;
+          if (!snapshot.hasData) {
+            return const Scaffold(body: DefaultCircularProgressIndicator());
+          }
+          if (snapshot.data!) {
+            // Guide finished, always show HomeView
+            return homeView;
+          }
+          // Guide not finished, show WelcomeView
+          return welcomeView;
         },
       ),
     );
   }
 
-  /// Checks Firestore for pressedGetStarted flag in flags collection.
-  Future<bool> pressedGetStarted() async {
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("flags")
-        .orderBy("timestamp", descending: true)
-        .limit(1)
-        .get();
-    if (snapshot.docs.isEmpty) {
+  /// Checks Firestore for finishedGuide flag in flags collection.
+  Future<bool> _finishedGuide() async {
+    try {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection("/flags")
+          .orderBy("timestamp", descending: true)
+          .limit(1)
+          .get();
+      if (snapshot.docs.isEmpty) {
+        // No flags collection or no docs: treat as not finished
+        return false;
+      }
+      final doc = snapshot.docs.first;
+      // If field missing, treat as not finished
+      final pressed = doc.data().toString().contains("finishedGuide")
+          ? doc["finishedGuide"]
+          : false;
+      return pressed == true;
+    } catch (e) {
       return false;
     }
-    final doc = snapshot.docs.first;
-    final pressed = doc["pressedGetStarted"];
-    return pressed == true;
   }
 }
