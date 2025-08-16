@@ -26,8 +26,8 @@ Future<void> main() async {
 
   /*
   COLLECTIONS
-  - /flags (for UI features flags)
-  - /door (for door-related features)
+  - flags (for UI features flags)
+  - door (for door-related features)
   */
 
   // run app
@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
   Future<bool> _finishedGuide() async {
     try {
       final QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection("/flags")
+          .collection("flags")
           .orderBy("timestamp", descending: true)
           .limit(1)
           .get();

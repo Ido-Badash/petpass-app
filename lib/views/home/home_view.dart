@@ -44,7 +44,7 @@ class HomeView extends StatelessWidget {
   /// returns true if online, false if offline
   Future<bool> getSysStatus() async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("/door")
+        .collection("door")
         .orderBy("timestamp")
         .limit(1)
         .get();

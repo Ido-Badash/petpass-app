@@ -26,7 +26,7 @@ class GuideView extends StatelessWidget {
 
   void _onDonePressed(BuildContext context) {
     // flag finishedGuide in DB as true
-    FirebaseFirestore.instance.collection("/flags").add({
+    FirebaseFirestore.instance.collection("flags").add({
       "finishedGuide": true,
       "timestamp": FieldValue.serverTimestamp(),
     });
