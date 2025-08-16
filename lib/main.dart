@@ -8,6 +8,7 @@ import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/firebase_options.dart';
+import 'package:petpass/utils/db_helpers.dart';
 import 'package:petpass/views/guide_view.dart';
 import 'package:petpass/views/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
@@ -86,15 +87,11 @@ class MyApp extends StatelessWidget {
           .limit(1)
           .get();
       if (snapshot.docs.isEmpty) {
-        // No flags collection or no docs: treat as not finished
         return false;
       }
       final doc = snapshot.docs.first;
-      // If field missing, treat as not finished
-      final pressed = doc.data().toString().contains("finishedGuide")
-          ? doc["finishedGuide"]
-          : false;
-      return pressed == true;
+      final feild = "finishedGuide";
+      return DBHelpers.feildExists(doc, feild);
     } catch (e) {
       return false;
     }
