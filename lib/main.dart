@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
-import 'package:petpass/firebase_options.dart';
 import 'package:petpass/views/guide/guide_view.dart';
 import 'package:petpass/views/home/home_view.dart';
 import 'package:petpass/views/welcome/welcome_view.dart';
@@ -25,9 +22,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
-  // firebase
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   /*
   COLLECTIONS
@@ -95,14 +89,7 @@ class MyApp extends StatelessWidget {
   /// Checks Firestore for finishedGuide flag in flags collection.
   Future<bool> _finishedGuide() async {
     try {
-      final doc = await FirebaseFirestore.instance
-          .collection("flags")
-          .doc("main")
-          .get();
-      if (!doc.exists) {
-        return false;
-      }
-      return doc["finishedGuide"] == true;
+      return false;
     } catch (e) {
       return false;
     }

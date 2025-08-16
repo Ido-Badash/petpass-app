@@ -1,4 +1,3 @@
-import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:petpass/views/home/widgets/number_card.dart";
 
@@ -7,21 +6,7 @@ class TodaysActivitySection extends StatelessWidget {
 
   Future<Map<String, int>> _getActivity() async {
     try {
-      final QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection("door")
-          .orderBy("timestamp", descending: true)
-          .limit(1)
-          .get();
-      if (snapshot.docs.isEmpty) {
-        return {"entries": 0, "exits": 0, "blocked": 0};
-      }
-      final doc = snapshot.docs.first;
-      final activity = doc["activity"] as Map<String, dynamic>?;
-      return {
-        "entries": activity?["entries"] as int? ?? 0,
-        "exits": activity?["exits"] as int? ?? 0,
-        "blocked": activity?["blocked"] as int? ?? 0,
-      };
+      return {"entries": 0, "exits": 0, "blocked": 0};
     } catch (e) {
       return {"entries": 0, "exits": 0, "blocked": 0};
     }
