@@ -7,10 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
+import 'package:petpass/door/init_connection.dart';
 import 'package:petpass/firebase_options.dart';
 import 'package:petpass/utils/db_helpers.dart';
 import 'package:petpass/views/guide_view.dart';
-import 'package:petpass/views/home_view.dart';
+import 'package:petpass/views/home/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
 
 Future<void> main() async {
@@ -19,6 +20,9 @@ Future<void> main() async {
 
   // firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // init connection
+  await initConnection();
 
   /*
   COLLECTIONS
@@ -41,10 +45,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final WelcomeView welcomeView = const WelcomeView();
-    final GuideView guideView = const GuideView();
-    final HomeView homeView = const HomeView();
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "PetPass",
@@ -52,9 +52,9 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system, // auto-switch based on device settings
       routes: {
-        "/welcome": (context) => welcomeView,
-        "/guide": (context) => guideView,
-        "/home": (context) => homeView,
+        "/welcome": (context) => const WelcomeView(),
+        "/guide": (context) => const GuideView(),
+        "/home": (context) => const HomeView(),
       },
       home: FutureBuilder<bool>(
         future: _finishedGuide(),
@@ -69,10 +69,10 @@ class MyApp extends StatelessWidget {
           }
           if (snapshot.data!) {
             // Guide finished, always show HomeView
-            return homeView;
+            return const HomeView();
           }
           // Guide not finished, show WelcomeView
-          return welcomeView;
+          return const WelcomeView();
         },
       ),
     );
