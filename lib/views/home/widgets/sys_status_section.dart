@@ -1,6 +1,6 @@
-import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:petpass/core/widgets/default_circular_progress_indicator.dart";
+import "package:petpass/data/services/check_status.dart";
 
 class SysStatusSection extends StatelessWidget {
   const SysStatusSection({super.key});
@@ -19,18 +19,7 @@ class SysStatusSection extends StatelessWidget {
     );
   }
 
-  Future<bool> getSysStatus() async {
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("/door")
-        .orderBy("timestamp")
-        .limit(1)
-        .get();
-    if (snapshot.docs.isEmpty) {
-      return false;
-    }
-    final doc = snapshot.docs.first;
-    return doc["status"] == "online";
-  }
+  Future<bool> getSysStatus() => DoorStatusChecker.status;
 
   Widget _buildContainer(BuildContext context, bool sysStatus) {
     return Container(
@@ -67,7 +56,7 @@ class SysStatusSection extends StatelessWidget {
 
   Widget _buildWelcomeText() {
     return const Text(
-      "Welcom Back!",
+      "Welcome Back!",
       style: TextStyle(
         color: Colors.white,
         fontSize: 26,
@@ -90,7 +79,7 @@ class SysStatusSection extends StatelessWidget {
       "● System ${sysStatus ? "Online" : "Offline"}",
       style: TextStyle(
         color: sysStatus ? Colors.green : Colors.red,
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w800,
       ),
     );

@@ -5,21 +5,14 @@ Checks the status of the door
 */
 
 class DoorStatusChecker {
-  static bool checkDoorStatus() {
-    // Check for errors
-    final bool haveErrors = checkForErrors();
+  static Future<bool> get status async =>
+      !await checkForErrors() && await checkForConnection();
 
-    // Check if the door is online
-    final bool isOnline = checkForConnection();
-
-    return !haveErrors && isOnline;
-  }
-
-  static bool checkForErrors() {
+  static Future<bool> checkForErrors() async {
     return false; // No errors
   }
 
-  static bool checkForConnection() {
+  static Future<bool> checkForConnection() async {
     return true; // Connection is online
   }
 }

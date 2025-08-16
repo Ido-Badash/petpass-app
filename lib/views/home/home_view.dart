@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:petpass/core/widgets/default_appbar.dart';
@@ -54,21 +53,5 @@ class HomeView extends StatelessWidget {
         icon: const Icon(Icons.nordic_walking),
       ),
     ];
-  }
-
-  /// Looks in the database to check if the system if online or offline
-  /// returns true if online, false if offline
-  Future<bool> getSysStatus() async {
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("door")
-        .orderBy("timestamp")
-        .limit(1)
-        .get();
-    if (snapshot.docs.isEmpty) {
-      return false;
-    }
-    final doc = snapshot.docs.first;
-    final status = doc["status"];
-    return status == "online";
   }
 }

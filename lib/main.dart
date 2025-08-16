@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
+import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/firebase_options.dart';
 import 'package:petpass/views/guide/guide_view.dart';
 import 'package:petpass/views/home/home_view.dart';
 import 'package:petpass/views/welcome/welcome_view.dart';
-import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 
 Future<void> main() async {
   // init widget binding
@@ -28,8 +28,6 @@ Future<void> main() async {
 
   // firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  // init connection
 
   /*
   COLLECTIONS
@@ -97,17 +95,14 @@ class MyApp extends StatelessWidget {
   /// Checks Firestore for finishedGuide flag in flags collection.
   Future<bool> _finishedGuide() async {
     try {
-      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+      final doc = await FirebaseFirestore.instance
           .collection("flags")
-          .orderBy("timestamp", descending: true)
-          .limit(1)
+          .doc("main")
           .get();
-      if (snapshot.docs.isEmpty) {
+      if (!doc.exists) {
         return false;
       }
-      final doc = snapshot.docs.first;
-      final field = "finishedGuide";
-      return doc[field] == true;
+      return doc["finishedGuide"] == true;
     } catch (e) {
       return false;
     }
