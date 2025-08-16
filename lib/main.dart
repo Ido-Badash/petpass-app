@@ -90,8 +90,8 @@ class MyApp extends StatelessWidget {
         return false;
       }
       final doc = snapshot.docs.first;
-      final feild = "finishedGuide";
-      return DBHelpers.feildExists(doc, feild);
+      final field = "finishedGuide";
+      return DBHelpers.feildExists(doc, field) && doc[field] == true;
     } catch (e) {
       return false;
     }
