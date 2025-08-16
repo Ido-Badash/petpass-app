@@ -16,9 +16,4 @@ class DBHelpers {
       }
     }
   }
-
-  /// Checks if a feild exists in a doc
-  static bool feildExists(QueryDocumentSnapshot<Object?> doc, String feild) {
-    return doc.data().toString().contains(feild);
-  }
 }

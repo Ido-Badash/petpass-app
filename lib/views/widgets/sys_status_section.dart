@@ -1,6 +1,5 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
-import "package:petpass/utils/db_helpers.dart";
 import "package:petpass/views/widgets/default_circular_progress_indicator.dart";
 
 class SysStatusSection extends StatelessWidget {
@@ -30,8 +29,7 @@ class SysStatusSection extends StatelessWidget {
       return false;
     }
     final doc = snapshot.docs.first;
-    final status = DBHelpers.feildExists(doc, "status") ? doc["status"] : null;
-    return status == "online";
+    return doc["status"] == "online";
   }
 
   Widget _buildContainer(BuildContext context, bool sysStatus) {

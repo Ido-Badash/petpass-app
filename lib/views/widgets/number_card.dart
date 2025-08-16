@@ -39,7 +39,7 @@ class NumberCard extends StatelessWidget {
   }
 
   static Widget classic(
-    num number,
+    num? number,
     String text, {
     Color? background,
     Color? borderColor,

@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
-import 'package:petpass/views/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/firebase_options.dart';
-import 'package:petpass/utils/db_helpers.dart';
 import 'package:petpass/views/guide_view.dart';
 import 'package:petpass/views/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
+import 'package:petpass/views/widgets/default_circular_progress_indicator.dart';
 
 Future<void> main() async {
   // init widget binding
@@ -108,7 +107,7 @@ class MyApp extends StatelessWidget {
       }
       final doc = snapshot.docs.first;
       final field = "finishedGuide";
-      return DBHelpers.feildExists(doc, field) && doc[field] == true;
+      return doc[field] == true;
     } catch (e) {
       return false;
     }

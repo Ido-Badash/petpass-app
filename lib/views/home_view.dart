@@ -17,17 +17,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         actionsPadding: const EdgeInsets.only(right: 8.0),
-        actions: [
-          if (kDebugMode)
-            IconButton(
-              onPressed: () {
-                log("Debug: Navigating to Guide page...", time: DateTime.now());
-                Navigator.pushNamed(context, "/welcome");
-              },
-              tooltip: "Welcome Page",
-              icon: const Icon(Icons.waving_hand_outlined),
-            ),
-        ],
+        actions: [if (kDebugMode) ..._buildDebugAppBarActions(context)],
       ),
 
       body: const Column(
@@ -43,6 +33,27 @@ class HomeView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<Widget> _buildDebugAppBarActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          log("Debug: Navigating to Welcome page...", time: DateTime.now());
+          Navigator.pushNamed(context, "/welcome");
+        },
+        tooltip: "Welcome Page",
+        icon: const Icon(Icons.waving_hand_outlined),
+      ),
+      IconButton(
+        onPressed: () {
+          log("Debug: Navigating to Guide page...", time: DateTime.now());
+          Navigator.pushNamed(context, "/guide");
+        },
+        tooltip: "Guide Page",
+        icon: const Icon(Icons.nordic_walking),
+      ),
+    ];
   }
 
   /// Looks in the database to check if the system if online or offline
