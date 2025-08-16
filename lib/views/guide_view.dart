@@ -3,6 +3,8 @@ GuideView
 guides the user on how to install and connect the door
 */
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:petpass/core/widgets/default_appbar.dart';
@@ -32,6 +34,7 @@ class GuideView extends StatelessWidget {
     });
 
     // Go to home page
+    log("Navigating to Home page...", time: DateTime.now());
     Navigator.pushNamed(context, "/home");
   }
 }

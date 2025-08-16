@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,22 +8,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
-import 'package:petpass/door/init_connection.dart';
 import 'package:petpass/firebase_options.dart';
 import 'package:petpass/utils/db_helpers.dart';
 import 'package:petpass/views/guide_view.dart';
-import 'package:petpass/views/home/home_view.dart';
+import 'package:petpass/views/home_view.dart';
 import 'package:petpass/views/welcome_view.dart';
 
 Future<void> main() async {
+  // init widget binding
   WidgetsFlutterBinding.ensureInitialized();
+
+  // fullscreen with swipe
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  // makes it no horizontal mode
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   // firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // init connection
-  await initConnection();
 
   /*
   COLLECTIONS
@@ -65,13 +73,22 @@ class MyApp extends StatelessWidget {
             );
           }
           if (!snapshot.hasData) {
+            log("Loading Firebase data...", time: DateTime.now());
             return const Scaffold(body: DefaultCircularProgressIndicator());
           }
           if (snapshot.data!) {
             // Guide finished, always show HomeView
+            log(
+              "User finished guide before, Navigating to Home page...",
+              time: DateTime.now(),
+            );
             return const HomeView();
           }
           // Guide not finished, show WelcomeView
+          log(
+            "User didnt finish guide, Navigating to Welcome page...",
+            time: DateTime.now(),
+          );
           return const WelcomeView();
         },
       ),

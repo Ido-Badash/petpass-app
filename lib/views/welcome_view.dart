@@ -3,6 +3,8 @@ WelcomeView
 The home screen of the app
 */
 
+import 'dart:developer';
+
 import 'package:floating_animation/floating_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -268,6 +270,7 @@ class _WelcomeViewState extends State<WelcomeView> {
 
   void _onGetStartedPressed() {
     // Navigate to the HomeView
+    log("Navigating to Guide page...", time: DateTime.now());
     Navigator.pushNamed(context, "/guide");
   }
 

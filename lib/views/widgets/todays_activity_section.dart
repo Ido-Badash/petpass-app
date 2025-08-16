@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:petpass/views/home/widgets/number_card.dart";
+import "package:petpass/views/widgets/number_card.dart";
 
 class TodaysActivitySection extends StatelessWidget {
   const TodaysActivitySection({super.key});
@@ -22,6 +22,7 @@ class TodaysActivitySection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0), // Space
+
           Row(
             children: [
               Expanded(child: NumberCard.classic(12, "Entries")),
