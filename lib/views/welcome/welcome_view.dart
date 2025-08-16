@@ -10,10 +10,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/custom_colors.dart';
-import 'package:petpass/views/widgets/default_appbar.dart';
-import 'package:petpass/views/widgets/feature_step_row.dart';
-import 'package:petpass/views/widgets/floating_widget.dart';
-import 'package:petpass/views/widgets/glow_feature_card.dart';
+import 'package:petpass/core/widgets/default_appbar.dart';
+import 'package:petpass/core/widgets/feature_step_row.dart';
+import 'package:petpass/core/widgets/floating_widget.dart';
+import 'package:petpass/core/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

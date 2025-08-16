@@ -8,10 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/firebase_options.dart';
-import 'package:petpass/views/guide_view.dart';
-import 'package:petpass/views/home_view.dart';
-import 'package:petpass/views/welcome_view.dart';
-import 'package:petpass/views/widgets/default_circular_progress_indicator.dart';
+import 'package:petpass/views/guide/guide_view.dart';
+import 'package:petpass/views/home/home_view.dart';
+import 'package:petpass/views/welcome/welcome_view.dart';
+import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 
 Future<void> main() async {
   // init widget binding

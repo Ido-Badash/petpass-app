@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:petpass/door/check_status.dart';
+import 'package:petpass/data/services/check_status.dart';
 
 /// Call this function to update the door's online/offline status in Firestore.
 Future<void> initConnection() async {

@@ -1,6 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
-import "package:petpass/views/widgets/default_circular_progress_indicator.dart";
+import "package:petpass/core/widgets/default_circular_progress_indicator.dart";
 
 class SysStatusSection extends StatelessWidget {
   const SysStatusSection({super.key});

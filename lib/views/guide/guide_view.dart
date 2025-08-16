@@ -7,7 +7,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:petpass/views/widgets/default_appbar.dart';
+import 'package:petpass/core/widgets/default_appbar.dart';
 
 class GuideView extends StatelessWidget {
   const GuideView({super.key});

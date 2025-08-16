@@ -1,6 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
-import "package:petpass/views/widgets/number_card.dart";
+import "package:petpass/views/home/widgets/number_card.dart";
 
 class TodaysActivitySection extends StatelessWidget {
   const TodaysActivitySection({super.key});

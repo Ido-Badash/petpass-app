@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:petpass/views/widgets/default_appbar.dart';
-import 'package:petpass/views/widgets/my_pets_section.dart';
-import 'package:petpass/views/widgets/recent_activity_section.dart';
-import 'package:petpass/views/widgets/sys_status_section.dart';
-import 'package:petpass/views/widgets/todays_activity_section.dart';
+import 'package:petpass/core/widgets/default_appbar.dart';
+import 'package:petpass/views/home/widgets/my_pets_section.dart';
+import 'package:petpass/views/home/widgets/recent_activity_section.dart';
+import 'package:petpass/views/home/widgets/sys_status_section.dart';
+import 'package:petpass/views/home/widgets/todays_activity_section.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
