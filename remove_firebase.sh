@@ -1,5 +1,6 @@
 #!/bin/bash
 # remove_firebase.sh
+# makes sure to run `chmod +x remove_firebase.sh` first
 # Usage: run in your Flutter project root
 
 echo "🚀 Removing Firebase from Flutter project..."
