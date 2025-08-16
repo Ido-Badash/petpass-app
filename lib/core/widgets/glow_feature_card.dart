@@ -6,16 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
 class GlowFeatureCard extends StatelessWidget {
-  final Widget? title;
-  final Widget? description;
-  final IconData? icon;
-  final Color? iconBackgroundColor;
-  final Color? backgroundColor;
-  final Color? foregroundColor;
-  final double? width;
-  final double? height;
-  final double? radius;
-
   const GlowFeatureCard({
     super.key,
     this.title,
@@ -28,6 +18,15 @@ class GlowFeatureCard extends StatelessWidget {
     this.height,
     this.radius,
   });
+  final Widget? title;
+  final Widget? description;
+  final IconData? icon;
+  final Color? iconBackgroundColor;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final double? width;
+  final double? height;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {

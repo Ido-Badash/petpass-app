@@ -7,15 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const DefaultAppBar({
+    super.key,
+    this.actions = const [],
+    this.actionsPadding,
+  });
   final List<Widget> actions;
-
-  const DefaultAppBar({super.key, this.actions = const []});
+  final EdgeInsetsGeometry? actionsPadding;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AppBar(
-      backgroundColor: theme.appBarTheme.backgroundColor ?? theme.scaffoldBackgroundColor,
+      backgroundColor:
+          theme.appBarTheme.backgroundColor ?? theme.scaffoldBackgroundColor,
       leading: GlowIcon(Icons.pets, color: theme.iconTheme.color),
       titleSpacing: 0,
       title: GlowText(
@@ -23,6 +28,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: theme.appBarTheme.titleTextStyle ?? theme.textTheme.titleLarge,
       ),
       actions: actions,
+      actionsPadding: actionsPadding,
     );
   }
 

@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:petpass/core/custom_colors.dart';
 
 class FeatureStepRow extends StatelessWidget {
+  const FeatureStepRow({
+    required this.stepText,
+    required this.featureCard,
+    super.key,
+    this.circleColor,
+    this.lineColor,
+    this.showLine = true,
+    this.circleSize = 30,
+    this.lineHeight = 64,
+    this.spacing = 16.0,
+  });
+
   final String stepText;
   final Color? circleColor;
   final Color? lineColor;
@@ -10,18 +22,6 @@ class FeatureStepRow extends StatelessWidget {
   final double lineHeight;
   final Widget featureCard;
   final double spacing;
-
-  const FeatureStepRow({
-    super.key,
-    required this.stepText,
-    required this.featureCard,
-    this.circleColor,
-    this.lineColor,
-    this.showLine = true,
-    this.circleSize = 30,
-    this.lineHeight = 64,
-    this.spacing = 16.0,
-  });
 
   @override
   Widget build(BuildContext context) {

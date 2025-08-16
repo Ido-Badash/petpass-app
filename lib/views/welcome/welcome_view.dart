@@ -3,17 +3,19 @@ WelcomeView
 The home screen of the app
 */
 
+import 'dart:developer';
+
+import 'package:floating_animation/floating_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/custom_colors.dart';
 import 'package:petpass/core/widgets/default_appbar.dart';
-import 'package:petpass/core/widgets/floating_widget.dart';
 import 'package:petpass/core/widgets/feature_step_row.dart';
+import 'package:petpass/core/widgets/floating_widget.dart';
 import 'package:petpass/core/widgets/glow_feature_card.dart';
 import 'package:scanning_effect/scanning_effect.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:floating_animation/floating_animation.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -23,7 +25,6 @@ class WelcomeView extends StatefulWidget {
 }
 
 class _WelcomeViewState extends State<WelcomeView> {
-  // spi = smooth page indicator
   final PageController _spiController = PageController();
   final int imagesCount = 3;
   final ScrollController _scrollController = ScrollController();
@@ -42,14 +43,28 @@ class _WelcomeViewState extends State<WelcomeView> {
     initialMoreInfoColor =
         Theme.of(context).textTheme.bodyMedium?.color?.withAlpha(178) ??
         Colors.white70;
-    _scrollController.addListener(() {
-      setState(() {
-        final double pixels = _scrollController.position.pixels;
-        final double fadeSpeed = 100.0; // lower number = faster fade
-        moreInfoOpacity = (1.0 - (pixels / fadeSpeed)).clamp(0.0, 1.0);
-      });
-    });
-    return Scaffold(appBar: DefaultAppBar(), body: _buildBody());
+    return Scaffold(
+      appBar: const DefaultAppBar(),
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (scrollNotification) {
+          if (scrollNotification.metrics.axis == Axis.vertical) {
+            final double pixels = scrollNotification.metrics.pixels;
+            final double fadeSpeed = 100.0; // lower number = faster fade
+            final double newOpacity = (1.0 - (pixels / fadeSpeed)).clamp(
+              0.0,
+              1.0,
+            );
+            if (newOpacity != moreInfoOpacity) {
+              setState(() {
+                moreInfoOpacity = newOpacity;
+              });
+            }
+          }
+          return false;
+        },
+        child: _buildBody(),
+      ),
+    );
   }
 
   Widget _buildBody() {
@@ -74,9 +89,9 @@ class _WelcomeViewState extends State<WelcomeView> {
             ),
           ), // Space
           _buildSmartFeaturesSection(),
-          SizedBox(height: 64), // Space
+          const SizedBox(height: 64), // Space
           _buildHowItWorksSection(),
-          SizedBox(height: 64), // Space
+          const SizedBox(height: 64), // Space
         ],
       ),
     );
@@ -255,7 +270,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         color: CustomColors.deepBlue,
         glowColor: CustomColors.deepBlue,
         borderRadius: BorderRadius.circular(64), // Makes border oval
-        onPressed: () => _onGetStartedPressed,
+        onPressed: _onGetStartedPressed,
         child: const GlowText(
           "GET STARTED",
           style: TextStyle(color: Colors.white),
@@ -267,8 +282,9 @@ class _WelcomeViewState extends State<WelcomeView> {
   }
 
   void _onGetStartedPressed() {
-    // 1. TODO: send massage to the DB so this view "WelcomeView" wont show up again when opening the app
-    // 2. TODO: move to the HomeView
+    // Navigate to the HomeView
+    log("Navigating to Guide page...", time: DateTime.now());
+    Navigator.pushNamed(context, "/guide");
   }
 
   Widget _buildImagesSection() {

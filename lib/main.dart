@@ -1,17 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
-import 'package:petpass/views/welcome_view.dart';
+import 'package:petpass/views/guide/guide_view.dart';
+import 'package:petpass/views/home/home_view.dart';
+import 'package:petpass/views/welcome/welcome_view.dart';
 
-void main() {
+Future<void> main() async {
+  // init widget binding
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  // fullscreen with swipe
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+  // makes it no horizontal mode
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  // run app
   runApp(
     GlowTheme(
       lightTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
       darkTheme: GlowThemeData(glowColor: Colors.blueAccent[100]),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -23,11 +38,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PetPass',
+      title: "PetPass",
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system, // auto-switch based on device settings
-      home: const WelcomeView(),
+      routes: {
+        "/welcome": (context) => const WelcomeView(),
+        "/guide": (context) => const GuideView(),
+        "/home": (context) => const HomeView(),
+      },
+      home: WelcomeView(),
     );
   }
 }
