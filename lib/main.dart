@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
-import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
+import 'package:petpass/views/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/firebase_options.dart';
 import 'package:petpass/utils/db_helpers.dart';
 import 'package:petpass/views/guide_view.dart';
