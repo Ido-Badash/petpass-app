@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
+import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
+import 'package:petpass/core/widgets/default_snapshot_on_error.dart';
+import 'package:petpass/utils/shared_prefs.dart';
 import 'package:petpass/views/guide/guide_view.dart';
 import 'package:petpass/views/home/home_view.dart';
 import 'package:petpass/views/welcome/welcome_view.dart';
@@ -47,7 +50,25 @@ class MyApp extends StatelessWidget {
         "/guide": (context) => const GuideView(),
         "/home": (context) => const HomeView(),
       },
-      home: WelcomeView(),
+      home: _startupView(),
+    );
+  }
+
+  Widget _startupView() {
+    return FutureBuilder<bool>(
+      future: SharedPrefsUtil.getFinishedGuide(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const DefaultCircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return const DefaultSnapshotOnError(
+            child: Text("Error loading preferences"),
+          );
+        }
+        final finishedGuide = snapshot.data ?? false;
+        return finishedGuide ? const HomeView() : const WelcomeView();
+      },
     );
   }
 }

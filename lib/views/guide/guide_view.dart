@@ -7,6 +7,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:petpass/core/widgets/default_appbar.dart';
+import 'package:petpass/utils/shared_prefs.dart';
 
 class GuideView extends StatelessWidget {
   const GuideView({super.key});
@@ -26,9 +27,11 @@ class GuideView extends StatelessWidget {
   }
 
   void _onDonePressed(BuildContext context) {
-    // TODO: set in data base that pressed
+    // save in shared prefs that the user finished the guide
+    log("Saving finishedGuide into SharedPreferences", time: DateTime.now());
+    SharedPrefsUtil.setFinishedGuide(value: true);
 
-    // Go to home page
+    // go to home page
     log("Navigating to Home page...", time: DateTime.now());
     Navigator.pushNamed(context, "/home");
   }

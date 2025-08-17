@@ -25,6 +25,9 @@ dependencies:
   # text
   google_fonts: ^6.3.0
 
+  # data storing / database
+  shared_preferences: ^2.5.3
+
 # Dev dependencies
 dev_dependencies:
   flutter_test:
