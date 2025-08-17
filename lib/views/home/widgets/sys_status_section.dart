@@ -1,12 +1,27 @@
 import "package:flutter/material.dart";
+import "package:petpass/core/widgets/default_circular_progress_indicator.dart";
+import "package:petpass/core/widgets/default_snapshot_on_error.dart";
+import "package:petpass/data/shared_prefs.dart";
 
 class SysStatusSection extends StatelessWidget {
   const SysStatusSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final sysStatus = true; // online
-    return _buildContainer(context, sysStatus);
+    return FutureBuilder(
+      future: SharedPrefsData.getSysStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const DefaultCircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return const DefaultSnapshotOnError(
+            child: Text("Error loading sysStatus preferences"),
+          );
+        }
+        return _buildContainer(context, snapshot.data ?? false);
+      },
+    );
   }
 
   Widget _buildContainer(BuildContext context, bool sysStatus) {

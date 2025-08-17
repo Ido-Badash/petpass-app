@@ -6,7 +6,7 @@ import 'package:flutter_glow/flutter_glow.dart';
 import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/core/widgets/default_snapshot_on_error.dart';
-import 'package:petpass/utils/shared_prefs.dart';
+import 'package:petpass/data/shared_prefs.dart';
 import 'package:petpass/views/guide/guide_view.dart';
 import 'package:petpass/views/home/home_view.dart';
 import 'package:petpass/views/welcome/welcome_view.dart';
@@ -56,14 +56,14 @@ class MyApp extends StatelessWidget {
 
   Widget _startupView() {
     return FutureBuilder<bool>(
-      future: SharedPrefsUtil.getFinishedGuide(),
+      future: SharedPrefsData.getFinishedGuide(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const DefaultCircularProgressIndicator();
         }
         if (snapshot.hasError) {
           return const DefaultSnapshotOnError(
-            child: Text("Error loading preferences"),
+            child: Text("Error loading finishedGuide preferences"),
           );
         }
         final finishedGuide = snapshot.data ?? false;

@@ -1,16 +1,11 @@
 import "package:flutter/material.dart";
+import "package:petpass/core/widgets/default_circular_progress_indicator.dart";
+import "package:petpass/core/widgets/default_snapshot_on_error.dart";
+import "package:petpass/data/shared_prefs.dart";
 import "package:petpass/views/home/widgets/number_card.dart";
 
 class TodaysActivitySection extends StatelessWidget {
   const TodaysActivitySection({super.key});
-
-  Map<String, int> _getActivity() {
-    try {
-      return {"entries": 0, "exits": 0, "blocked": 0};
-    } catch (e) {
-      return {"entries": 0, "exits": 0, "blocked": 0};
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +25,23 @@ class TodaysActivitySection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0), // Space
-          Builder(
-            builder: (context) {
-              final activity = _getActivity();
+          FutureBuilder<List<int>>(
+            future: SharedPrefsData.getSysActivity(),
+            builder: (context, snapshot) {
+              final List<int> activity = snapshot.data ?? [0, 0, 0];
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const DefaultCircularProgressIndicator();
+              }
+              if (snapshot.hasError) {
+                return const DefaultSnapshotOnError(
+                  child: Text("Error loading sysActivity preferences"),
+                );
+              }
               return Row(
                 children: [
-                  Expanded(
-                    child: NumberCard.classic(
-                      activity["entries"] ?? 0,
-                      "Entries",
-                    ),
-                  ),
-                  Expanded(
-                    child: NumberCard.classic(activity["exits"] ?? 0, "Exits"),
-                  ),
-                  Expanded(
-                    child: NumberCard.classic(
-                      activity["blocked"] ?? 0,
-                      "Blocked",
-                    ),
-                  ),
+                  Expanded(child: NumberCard.classic(activity[0], "Entries")),
+                  Expanded(child: NumberCard.classic(activity[1], "Exits")),
+                  Expanded(child: NumberCard.classic(activity[2], "Blocked")),
                 ],
               );
             },
