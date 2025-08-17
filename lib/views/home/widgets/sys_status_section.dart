@@ -34,7 +34,11 @@ class SysStatusSection extends StatelessWidget {
             Color.fromARGB(75, 80, 80, 255),
           ],
         ),
-        border: Border.all(color: Colors.white30),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white30
+              : Colors.black12,
+        ),
         borderRadius: BorderRadius.circular(8),
       ),
       alignment: Alignment.bottomLeft,
@@ -60,11 +64,7 @@ class SysStatusSection extends StatelessWidget {
   Widget _buildWelcomeText() {
     return const Text(
       "Welcome Back!",
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 26,
-        fontWeight: FontWeight.bold,
-      ),
+      style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
     );
   }
 
@@ -73,7 +73,7 @@ class SysStatusSection extends StatelessWidget {
       sysStatus
           ? "Your smart pet door is protecting your home"
           : "Your smart pet door is currently inactive",
-      style: const TextStyle(color: Colors.white, fontSize: 14),
+      style: const TextStyle(fontSize: 14),
     );
   }
 

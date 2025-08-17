@@ -16,20 +16,23 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: DefaultAppBar(
         actionsPadding: const EdgeInsets.only(right: 8.0),
-        actions: [if (kDebugMode) ..._buildDebugAppBarActions(context)],
+        actions: [..._buildDebugAppBarActions(context)],
       ),
-
-      body: const Column(
-        children: [
-          SizedBox(height: 16.0),
-          Expanded(flex: 1, child: SysStatusSection()),
-          SizedBox(height: 16.0),
-          Expanded(flex: 1, child: TodaysActivitySection()),
-          SizedBox(height: 16.0),
-          Expanded(flex: 2, child: MyPetsSection()),
-          SizedBox(height: 16.0),
-          Expanded(flex: 2, child: RecentActivitySection()),
-        ],
+      body: const SingleChildScrollView(
+        child: IntrinsicHeight(
+          child: Column(
+            children: [
+              SizedBox(height: 16.0),
+              SysStatusSection(),
+              SizedBox(height: 16.0),
+              TodaysActivitySection(),
+              SizedBox(height: 16.0),
+              MyPetsSection(),
+              SizedBox(height: 16.0),
+              RecentActivitySection(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -38,20 +41,21 @@ class HomeView extends StatelessWidget {
     return [
       IconButton(
         onPressed: () {
-          log("Debug: Navigating to Welcome page...", time: DateTime.now());
-          Navigator.pushNamed(context, "/welcome");
-        },
-        tooltip: "Welcome Page",
-        icon: const Icon(Icons.waving_hand_outlined),
-      ),
-      IconButton(
-        onPressed: () {
           log("Debug: Navigating to Guide page...", time: DateTime.now());
           Navigator.pushNamed(context, "/guide");
         },
         tooltip: "Guide Page",
         icon: const Icon(Icons.nordic_walking),
       ),
+      if (kDebugMode)
+        IconButton(
+          onPressed: () {
+            log("Debug: Navigating to Welcome page...", time: DateTime.now());
+            Navigator.pushNamed(context, "/welcome");
+          },
+          tooltip: "Welcome Page",
+          icon: const Icon(Icons.waving_hand_outlined),
+        ),
     ];
   }
 }

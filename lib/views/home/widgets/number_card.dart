@@ -5,10 +5,14 @@ class NumberCard extends StatelessWidget {
     required this.number,
     required this.text,
     super.key,
+    this.width,
+    this.height,
     this.background,
     this.borderColor,
     this.borderWidth,
   });
+  final double? width;
+  final double? height;
   final Widget number;
   final Widget text;
   final Color? background;
@@ -18,6 +22,8 @@ class NumberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: width,
+      height: height,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
         color: background,
@@ -41,6 +47,8 @@ class NumberCard extends StatelessWidget {
   static Widget classic(
     num? number,
     String text, {
+    double? width,
+    double? height,
     Color? background,
     Color? borderColor,
     double? borderWidth,
@@ -50,6 +58,8 @@ class NumberCard extends StatelessWidget {
       builder: (ctx) {
         final theme = Theme.of(context ?? ctx);
         return NumberCard(
+          width: width,
+          height: height,
           number: Text(
             "$number",
             style: theme.textTheme.headlineSmall?.copyWith(
@@ -61,7 +71,11 @@ class NumberCard extends StatelessWidget {
             text,
             style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[400]),
           ),
-          background: background ?? Colors.grey[900],
+          background:
+              background ??
+              (Theme.of(ctx).brightness == Brightness.dark
+                  ? Colors.grey[900]
+                  : const Color.fromARGB(255, 248, 248, 255)),
           borderWidth: borderWidth ?? 0.5,
           borderColor: borderColor,
         );

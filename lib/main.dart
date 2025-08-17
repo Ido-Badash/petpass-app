@@ -7,8 +7,11 @@ import 'package:petpass/core/app_theme.dart';
 import 'package:petpass/core/widgets/default_circular_progress_indicator.dart';
 import 'package:petpass/core/widgets/default_snapshot_on_error.dart';
 import 'package:petpass/data/shared_prefs.dart';
+import 'package:petpass/views/activity/activity_view.dart';
 import 'package:petpass/views/guide/guide_view.dart';
 import 'package:petpass/views/home/home_view.dart';
+import 'package:petpass/views/pets/pets_view.dart';
+import 'package:petpass/views/settings/settings_view.dart';
 import 'package:petpass/views/welcome/welcome_view.dart';
 
 Future<void> main() async {
@@ -49,6 +52,9 @@ class MyApp extends StatelessWidget {
         "/welcome": (context) => const WelcomeView(),
         "/guide": (context) => const GuideView(),
         "/home": (context) => const HomeView(),
+        "/pets": (context) => const PetsView(),
+        "/activity": (context) => const ActivityView(),
+        "/settings": (context) => const SettingsView(),
       },
       home: _startupView(),
     );

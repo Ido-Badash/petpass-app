@@ -18,10 +18,9 @@ class TodaysActivitySection extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: Text(
               "Today's Activity",
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const SizedBox(height: 8.0), // Space
@@ -37,11 +36,25 @@ class TodaysActivitySection extends StatelessWidget {
                   child: Text("Error loading sysActivity preferences"),
                 );
               }
+              final double width = MediaQuery.of(context).size.width;
               return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(child: NumberCard.classic(activity[0], "Entries")),
-                  Expanded(child: NumberCard.classic(activity[1], "Exits")),
-                  Expanded(child: NumberCard.classic(activity[2], "Blocked")),
+                  NumberCard.classic(
+                    activity[0],
+                    "Entries",
+                    width: width / 3 - 24,
+                  ),
+                  NumberCard.classic(
+                    activity[1],
+                    "Exits",
+                    width: width / 3 - 24,
+                  ),
+                  NumberCard.classic(
+                    activity[2],
+                    "Blocked",
+                    width: width / 3 - 24,
+                  ),
                 ],
               );
             },

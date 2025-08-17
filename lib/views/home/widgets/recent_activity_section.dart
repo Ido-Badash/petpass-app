@@ -7,9 +7,22 @@ class RecentActivitySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.teal[300],
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Recent Activity",
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
+          Container(
+            color: Colors.teal,
+          ),
+        ],
       ),
     );
   }
